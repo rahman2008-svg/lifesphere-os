@@ -59,8 +59,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    // ✅ NEW MODERN WAY (IMPORTANT FIX)
+    kotlin {
+        jvmToolchain(17)
     }
 
     buildFeatures {
@@ -116,16 +117,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // TEST (keep but safe)
     testImplementation(libs.junit)
     testImplementation(libs.androidx.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-
-    // ❗ IMPORTANT: Robolectric & Roborazzi (cause CI crash sometimes)
-    // testImplementation(libs.robolectric)  // disabled for Codemagic stability
-    // testImplementation(libs.roborazzi)
-    // testImplementation(libs.roborazzi.compose)
-    // testImplementation(libs.roborazzi.junit.rule)
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
