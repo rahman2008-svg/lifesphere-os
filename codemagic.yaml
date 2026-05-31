@@ -1,6 +1,6 @@
 workflows:
   android-debug:
-    name: LifeSphere OS Build
+    name: LifeSphere OS Stable Build
     max_build_duration: 60
 
     environment:
@@ -8,7 +8,7 @@ workflows:
 
     scripts:
 
-      - name: Make gradlew executable
+      - name: Fix permissions
         script: |
           chmod +x gradlew
 
@@ -16,9 +16,15 @@ workflows:
         script: |
           ./gradlew clean
 
-      - name: Build APK (skip tests)
+      - name: Build Debug APK (NO TESTS)
         script: |
           ./gradlew assembleDebug -x test
 
     artifacts:
       - app/build/outputs/**/*.apk
+      - app/build/outputs/**/*.aab
+
+    publishing:
+      email:
+        recipients:
+          - "prince.ar.abdur.rahman2008@gmail.com"
