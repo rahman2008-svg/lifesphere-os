@@ -6,24 +6,17 @@ workflows:
     environment:
       java: 17
 
-      vars:
-        PACKAGE_NAME: "com.nexvora.lifesphereos"
-
     scripts:
-
-      - name: Checkout
-        script: |
-          git clone $CM_REPO_URL .
 
       - name: Make gradlew executable
         script: |
           chmod +x gradlew
 
-      - name: Clean
+      - name: Clean project
         script: |
           ./gradlew clean
 
-      - name: Build Debug APK (skip tests)
+      - name: Build APK (skip tests)
         script: |
           ./gradlew assembleDebug -x test
 
