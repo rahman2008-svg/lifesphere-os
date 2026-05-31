@@ -1,0 +1,6 @@
+{
+  "name": "LifeSphere OS",
+  "description": "An offline-first Life Operating System to track habits, record journals, manage projects, set missions, and archive life timeline memories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

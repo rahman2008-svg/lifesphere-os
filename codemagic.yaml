@@ -1,0 +1,43 @@
+# Codemagic CI/CD Build Configuration for LifeSphere OS
+workflows:
+  android-debug:
+    name: LifeSphere OS Android Debug Build
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - keystores
+      vars:
+        # Keystore password vars if available
+        STORE_PASSWORD: "android"
+        KEY_PASSWORD: "android"
+      java: 17
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+        - pattern: 'master'
+          include: true
+    scripts:
+      - name: Set up gradle properties & caching
+        script: | 
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+          chmod +x gradlew
+      - name: Run local unit tests
+        script: | 
+          ./gradlew testDebugUnitTest
+      - name: Build Android Debug APK
+        script: | 
+          ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/apk/debug/app-debug.apk
+    publishing:
+      email:
+        recipients:
+          - prince.ar.abdur.rahman2008@gmail.com
+        notify:
+          success: true
+          failure: true
