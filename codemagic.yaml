@@ -1,13 +1,10 @@
 workflows:
-  android-build:
+  android-debug:
     name: LifeSphere OS Build
     max_build_duration: 60
 
     environment:
       java: 17
-
-      groups:
-        - android_credentials
 
       vars:
         PACKAGE_NAME: "com.nexvora.lifesphereos"
@@ -17,12 +14,12 @@ workflows:
       - name: Checkout
         script: |
           git clone $CM_REPO_URL .
-      
-      - name: Set permissions
+
+      - name: Make gradlew executable
         script: |
           chmod +x gradlew
 
-      - name: Clean project
+      - name: Clean
         script: |
           ./gradlew clean
 
@@ -30,15 +27,5 @@ workflows:
         script: |
           ./gradlew assembleDebug -x test
 
-      - name: Build Release APK (optional)
-        script: |
-          ./gradlew assembleRelease -x test
-
     artifacts:
       - app/build/outputs/**/*.apk
-      - app/build/outputs/**/*.aab
-
-    publishing:
-      email:
-        recipients:
-          - "prince.ar.abdur.rahman2008@gmail.com"
