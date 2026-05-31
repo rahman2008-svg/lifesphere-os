@@ -7,18 +7,17 @@ workflows:
       java: 17
 
     scripts:
-
       - name: Fix permissions
         script: |
           chmod +x gradlew
 
-      - name: Clean project
+      - name: Clean project (safe)
         script: |
-          ./gradlew clean
+          ./gradlew clean --no-daemon
 
-      - name: Build Debug APK (NO TESTS - SAFE)
+      - name: Build Debug APK (NO TESTS)
         script: |
-          ./gradlew assembleDebug -x test
+          ./gradlew assembleDebug --no-daemon -x test
 
     artifacts:
       - app/build/outputs/**/*.apk
