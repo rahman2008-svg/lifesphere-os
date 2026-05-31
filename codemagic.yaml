@@ -16,7 +16,7 @@ workflows:
         script: |
           ./gradlew clean
 
-      - name: Build Debug APK (NO TESTS)
+      - name: Build Debug APK (NO TESTS - SAFE)
         script: |
           ./gradlew assembleDebug -x test
 
