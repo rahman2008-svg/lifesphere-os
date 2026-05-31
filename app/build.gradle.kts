@@ -19,6 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // ❌ IMPORTANT FIX: ONLY ONE debug config (default already exists)
     signingConfigs {
         create("release") {
             val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
@@ -26,13 +27,6 @@ android {
             storePassword = System.getenv("STORE_PASSWORD")
             keyAlias = "upload"
             keyPassword = System.getenv("KEY_PASSWORD")
-        }
-
-        create("debug") {
-            storeFile = file("${rootDir}/debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
         }
     }
 
@@ -50,7 +44,8 @@ android {
         }
 
         debug {
-            signingConfig = signingConfigs.getByName("debug")
+            // use default debug keystore automatically
+            isMinifyEnabled = false
         }
     }
 
@@ -59,7 +54,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // ✅ NEW MODERN WAY (IMPORTANT FIX)
+    // ✅ FIXED (NO kotlinOptions ERROR)
     kotlin {
         jvmToolchain(17)
     }
